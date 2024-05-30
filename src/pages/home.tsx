@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { FifteenResponse } from "../api/types";
 import { handleFifteenRequest } from "../api/handler";
 import Header from "./components/header";
+import Amenity from "./components/amenity";
 
 export default function Home() {
   const [text, setText] = useState("");
@@ -41,8 +42,9 @@ export default function Home() {
       {amenitiesData && (
         <div>
           <h2>You are in a 15 minute neighbourhood!</h2>
-          <p>Cafe: {amenitiesData.cafe.place.name}</p>
-          <p>School: {amenitiesData.school.place.name}</p>
+          {Object.entries(amenitiesData).map(([place, data]) =>
+            Amenity(place, data.place, data.route),
+          )}
         </div>
       )}
     </>
